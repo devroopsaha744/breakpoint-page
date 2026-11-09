@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Breakpoint</title>
-  <meta name="description" content="Breakpoint is a local-first autonomous QA engineer. It boots your repo in a sandbox, tests it like a human, records every step and hands each bug to your coding agent.">
-  <meta property="og:title" content="Breakpoint: autonomous QA for your repo">
-  <meta property="og:description" content="Boots your app in a sandbox, tests it like a human, records everything.">
+  <meta name="description" content="Breakpoint is a local-first QA engineer. A Mac app that tests your repo end to end, and a Claude Code plugin that gives Claude a sandboxed, recorded browser, bug reports and replay to verify fixes.">
+  <meta property="og:title" content="Breakpoint: QA that runs on your Mac">
+  <meta property="og:description" content="Test like a human. Catch every error. Replay to prove the fix.">
+  <meta name="theme-color" content="#050505">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,136 +15,187 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="glow" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true"><div class="grid"></div><div class="spot"></div></div>
 
   <header class="nav">
-    <a class="brand" href="#top"><img src="assets/mark.svg" alt="" width="22" height="22"> Breakpoint</a>
+    <a class="brand" href="#top"><img src="assets/mark.svg" alt="" width="24" height="24"> Breakpoint</a>
     <nav class="nav-links">
+      <a href="#claude">Claude Code</a>
+      <a href="#loop">How it works</a>
       <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="#download">Download</a>
+      <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-small" href="#download">Download</a>
+    <a class="btn btn-small" href="#install">Install</a>
   </header>
 
   <main id="top">
+    <!-- Hero -->
     <section class="hero">
-      <p class="pill"><span class="dot"></span> Early preview · macOS</p>
-      <h1>The QA engineer<br>that runs on your Mac.</h1>
-      <p class="lede">Point Breakpoint at a repo. It boots your stack in a sandbox, tests it end to end the way a person would, records every step on video, and turns each bug into a handoff your coding agent can fix.</p>
+      <a class="pill" href="#install"><span class="dot"></span> v0.1 · Mac app + Claude Code plugin <span class="pill-arrow">→</span></a>
+      <h1>Your app, tested<br>like a <span class="shine">human would</span>.</h1>
+      <p class="lede">Breakpoint opens your app in a sandboxed, screen-recorded browser, catches every console error, failed request and server exception, files bugs with the files to blame, and replays them to prove your fix works.</p>
       <div class="cta">
-        <a class="btn" data-download href="#download">
+        <a class="btn" data-download href="#install">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.2 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.8 1.2 1.8 2.6 3.1 2.5 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.4-1-2.4-3.7zM14 5.3c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg>
           Download for macOS
         </a>
-        <a class="btn btn-ghost" href="#how">See how it works</a>
+        <a class="btn btn-ghost" href="#install" data-tab-link="plugin">
+          <span class="cc-glyph" aria-hidden="true">✳</span> Add to Claude Code
+        </a>
       </div>
-      <p class="fine">Apple Silicon · macOS 13 or later · free and local</p>
+      <button class="cmd" data-copy="/plugin marketplace add devroopsaha744/breakpoint-page" aria-label="Copy the plugin command">
+        <span class="cmd-prompt">&gt;</span> /plugin marketplace add devroopsaha744/breakpoint-page <span class="copy-label">Copy</span>
+      </button>
 
-      <div class="window" role="img" aria-label="Breakpoint app showing a live test run">
-        <div class="window-bar"><span></span><span></span><span></span><em>Breakpoint · tiny-shop</em></div>
-        <div class="window-body">
-          <aside class="side">
-            <p class="side-label">Journeys</p>
-            <ul>
-              <li class="pass">Sign up and verify email</li>
-              <li class="pass">Browse and search products</li>
-              <li class="run">Checkout with a coupon</li>
-              <li>Edit shipping address</li>
-              <li>Admin refunds an order</li>
-            </ul>
-          </aside>
-          <div class="stage">
-            <div class="viewport">
-              <div class="fake-page">
-                <div class="fp-bar"></div>
-                <div class="fp-row"><i></i><i></i><i></i></div>
-                <div class="fp-total">Total <b>$-12.00</b></div>
-                <div class="fp-btn">Place order</div>
-                <div class="cursor"></div>
+      <!-- Live demo window -->
+      <div class="window-wrap reveal">
+        <div class="window" role="img" aria-label="Breakpoint catching a bug, filing it and confirming the fix by replay">
+          <div class="window-bar"><span></span><span></span><span></span><em>Breakpoint · tiny-shop</em><b class="rec"><i></i> REC <span data-clock>00:00</span></b></div>
+          <div class="window-body">
+            <aside class="side">
+              <p class="side-label">Journeys</p>
+              <ul>
+                <li class="pass">Sign up and verify email</li>
+                <li class="pass">Browse and search</li>
+                <li class="run">Checkout with a coupon</li>
+                <li>Edit shipping address</li>
+                <li>Admin refunds an order</li>
+              </ul>
+              <p class="side-label">Findings</p>
+              <div class="finding-chip" data-demo="chip"><span class="sev">HIGH</span> Coupon makes total negative</div>
+            </aside>
+            <div class="stage">
+              <div class="viewport">
+                <div class="fake-page">
+                  <div class="fp-top"><div class="fp-bar"></div><div class="fp-cart">Cart · 3</div></div>
+                  <div class="fp-row"><i></i><i></i><i></i></div>
+                  <div class="fp-coupon"><span>SAVE100</span><em>Apply</em></div>
+                  <div class="fp-total">Total <b data-demo="total">$88.00</b></div>
+                  <div class="fp-btn">Place order</div>
+                  <div class="cursor" data-demo="cursor"></div>
+                </div>
+                <div class="toast" data-demo="toast"></div>
               </div>
-              <span class="rec">● REC 02:41</span>
+              <ol class="log" data-demo="log" aria-live="off"></ol>
             </div>
-            <ol class="log">
-              <li><code>left_click</code> “Apply coupon” <span class="ok">✓</span></li>
-              <li><code>type</code> “SAVE100” <span class="ok">✓</span></li>
-              <li><code>screenshot</code></li>
-              <li class="bug"><code>report_bug</code> Coupon drives the order total negative <span>high</span></li>
-            </ol>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="features" class="section">
-      <h2>Built like a QA engineer, not a test script.</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Repo first</h3>
-          <p>Boots your stack in Docker with seeded data and test accounts. Mail and payments go to local mocks, never real providers.</p>
-        </article>
-        <article class="card">
-          <h3>Native browser use</h3>
-          <p>With Claude, the model drives the browser through its own browser tools: real clicks, typing, tabs and screenshots.</p>
-        </article>
-        <article class="card">
-          <h3>Evidence for every bug</h3>
-          <p>Continuous video, annotated before and after screenshots, network HAR, console and server logs, synced on one timeline.</p>
-        </article>
-        <article class="card">
-          <h3>Any model, your keys</h3>
-          <p>Anthropic, OpenAI, Gemini, OpenRouter, Ollama, LM Studio or any OpenAI-compatible endpoint. Pick a model per role.</p>
-        </article>
-        <article class="card">
-          <h3>Local only</h3>
-          <p>No cloud, no account, no telemetry. API keys are encrypted with your macOS keychain.</p>
-        </article>
-        <article class="card">
-          <h3>Handoffs, then fixes</h3>
-          <p>Each bug becomes a Markdown handoff for your coding agent. Verified fix PRs are next on the roadmap.</p>
-        </article>
+    <!-- Works with -->
+    <section class="strip reveal" aria-label="Works with">
+      <span>Works with</span>
+      <b>Claude Code</b><b>OrbStack</b><b>Docker Desktop</b><b>Colima</b><b>React</b><b>Next.js</b><b>Rails</b><b>Django</b><b>Express</b><b>anything with a URL</b>
+    </section>
+
+    <!-- Claude Code -->
+    <section id="claude" class="section split">
+      <div class="reveal">
+        <p class="eyebrow">Claude Code plugin</p>
+        <h2>Claude does the thinking.<br>Breakpoint gives it hands.</h2>
+        <p class="body">Install the plugin and Claude Code gets 28 QA tools and a <code>/qa</code> skill. It plans the journeys, drives a real browser, decides what is a bug, fixes the code, and asks Breakpoint to replay the bug to prove the fix. Breakpoint never calls a model and needs no API key.</p>
+        <ul class="ticks">
+          <li><b>Every action reports back.</b> Console errors, 4xx and 5xx responses and server exceptions come back with the click that caused them.</li>
+          <li><b>Bugs with receipts.</b> Screenshots, a video clip, network and server logs, and the files in your repo most likely to blame.</li>
+          <li><b>Replay without a model.</b> Recorded steps run again from a clean session and answer “still fires” or “fixed”.</li>
+        </ul>
+      </div>
+      <div class="term reveal" aria-label="Claude Code using Breakpoint">
+        <div class="term-bar"><span></span><span></span><span></span><em>claude · tiny-shop</em></div>
+        <div class="term-body" data-term></div>
       </div>
     </section>
 
-    <section id="how" class="section">
-      <h2>Three steps to a test run.</h2>
-      <ol class="steps">
-        <li><span>01</span><h3>Add a key</h3><p>Bring a key for any provider and pick your models, or use a preset.</p></li>
-        <li><span>02</span><h3>Open a repo</h3><p>Breakpoint reads your compose file, Dockerfile or package.json and proposes how to boot it.</p></li>
-        <li><span>03</span><h3>Watch it test</h3><p>Follow the run live, steer it in plain English, and get findings with root cause and video.</p></li>
+    <!-- Loop -->
+    <section id="loop" class="section">
+      <p class="eyebrow reveal">How it works</p>
+      <h2 class="reveal">Find it, prove it, fix it, prove it again.</h2>
+      <ol class="loop reveal">
+        <li><span class="num">01</span><h3>Explore</h3><p>Journeys a real user takes, run in a sandboxed Chromium you can watch live. Every second is recorded.</p></li>
+        <li><span class="num">02</span><h3>Catch</h3><p>Oracles flag console errors, failed requests, 404 pages, server exceptions and serious accessibility issues.</p></li>
+        <li><span class="num">03</span><h3>Report</h3><p>A finding with repro steps, a clip, logs and suspect files, written as a handoff your coding agent can act on.</p></li>
+        <li><span class="num">04</span><h3>Replay</h3><p>After the fix, the exact steps run again with no model in the loop. Green means fixed, not “looks fine to me”.</p></li>
       </ol>
     </section>
 
-    <section id="download" class="section download">
-      <h2>Download Breakpoint</h2>
-      <p class="lede">Free while in early preview.</p>
-      <a class="btn" data-download href="#download">Download for macOS (Apple Silicon)</a>
-      <div class="reqs">
-        <div>
-          <h3>You'll need</h3>
-          <ul>
-            <li>macOS 13 or later on Apple Silicon</li>
-            <li>Docker: OrbStack, Docker Desktop, Colima or Rancher Desktop</li>
-            <li>An API key, or a local model through Ollama or LM Studio</li>
-          </ul>
-        </div>
-        <div>
-          <h3>First launch</h3>
-          <p>This preview isn't notarized by Apple yet. Open the .dmg, drag Breakpoint to Applications, then right-click it and choose <b>Open</b>. macOS asks once.</p>
-        </div>
+    <!-- Features -->
+    <section id="features" class="section">
+      <p class="eyebrow reveal">Features</p>
+      <h2 class="reveal">Built like a QA engineer, not a test script.</h2>
+      <div class="cards">
+        <article class="card reveal"><div class="ico">◎</div><h3>Repo first</h3><p>Boots your stack in Docker from its compose file, Dockerfile or package.json, with seeded data, test accounts and database snapshots. Or attach to the dev server you already run.</p></article>
+        <article class="card reveal"><div class="ico">⌁</div><h3>Native browser use</h3><p>With Claude, the model drives the browser through its own browser tools: real clicks, typing, tabs and screenshots, with OS-level input when a page fights back.</p></article>
+        <article class="card reveal"><div class="ico">▶</div><h3>Evidence on one timeline</h3><p>Continuous video, before and after screenshots, HAR, console and server logs, synced so every bug has its moment on tape.</p></article>
+        <article class="card reveal"><div class="ico">✉</div><h3>Safe by default</h3><p>Mail goes to a local catcher and payments to a Stripe mock, never real providers. The sandbox is only reachable from your machine.</p></article>
+        <article class="card reveal"><div class="ico">⚿</div><h3>Any model, your keys</h3><p>The Mac app runs its own agent with Anthropic, OpenAI, Gemini, OpenRouter, Ollama or LM Studio. Keys stay in your macOS keychain.</p></article>
+        <article class="card reveal"><div class="ico">⌂</div><h3>Local only</h3><p>No cloud, no account, no telemetry. Runs live in <code>~/.breakpoint</code>, where the app and Claude Code both read them.</p></article>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section id="install" class="section install">
+      <p class="eyebrow reveal">Install</p>
+      <h2 class="reveal">Three ways in.</h2>
+      <div class="tabs reveal" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="plugin"><span class="long">Claude Code </span>plugin</button>
+        <button role="tab" aria-selected="false" data-tab="script"><span class="long">Install </span>script</button>
+        <button role="tab" aria-selected="false" data-tab="mac">Mac app</button>
+      </div>
+
+      <div class="panel reveal" data-panel="plugin">
+        <p class="panel-lede">The MCP server and the <code>/qa</code> skill in one install. Inside Claude Code:</p>
+        <div class="code"><pre>/plugin marketplace add devroopsaha744/breakpoint-page
+/plugin install breakpoint@breakpoint</pre><button data-copy="/plugin marketplace add devroopsaha744/breakpoint-page&#10;/plugin install breakpoint@breakpoint">Copy</button></div>
+        <p class="panel-lede">Or from your terminal:</p>
+        <div class="code"><pre>claude plugin marketplace add devroopsaha744/breakpoint-page
+claude plugin install breakpoint@breakpoint</pre><button data-copy="claude plugin marketplace add devroopsaha744/breakpoint-page&#10;claude plugin install breakpoint@breakpoint">Copy</button></div>
+        <p class="hint">Then ask: <em>“QA my app at http://localhost:3000 and fix what you find.”</em> The first session builds the sandbox image, which takes a few minutes.</p>
+      </div>
+
+      <div class="panel reveal" data-panel="script" hidden>
+        <p class="panel-lede">Downloads the MCP server to <code>~/.breakpoint/mcp</code>, installs the <code>/qa</code> skill and registers the server with <code>claude mcp add</code>.</p>
+        <div class="code"><pre>curl -fsSL https://devroopsaha744.github.io/breakpoint-page/install.sh | sh</pre><button data-copy="curl -fsSL https://devroopsaha744.github.io/breakpoint-page/install.sh | sh">Copy</button></div>
+        <p class="hint">Prefer to read it first? <a href="install.sh">View install.sh</a>. Works with any MCP client: point it at <code>node ~/.breakpoint/mcp/0.1.0/server.mjs</code>.</p>
+      </div>
+
+      <div class="panel reveal" data-panel="mac" hidden>
+        <p class="panel-lede">The desktop app runs the whole QA agent itself, with your own model keys, and shows runs from Claude Code too.</p>
+        <a class="btn" data-download href="#install">Download Breakpoint for macOS · Apple Silicon</a>
+        <p class="hint">Not notarized yet: open the .dmg, drag Breakpoint to Applications, then right-click it and choose <b>Open</b>. macOS asks once.</p>
+      </div>
+
+      <div class="reqs reveal">
+        <div><h3>You'll need</h3><ul><li>macOS 13+ on Apple Silicon (Mac app)</li><li>Docker: OrbStack, Docker Desktop, Colima or Rancher</li><li>Node.js 20+ (plugin and script)</li></ul></div>
+        <div><h3>Logins</h3><p>Give Breakpoint test accounts in a <code>breakpoint.json</code> at your repo root, or pass them when the session starts. It never guesses real credentials.</p></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section faq">
+      <p class="eyebrow reveal">FAQ</p>
+      <h2 class="reveal">Questions.</h2>
+      <details class="reveal"><summary>Does the Claude Code plugin call an AI model?</summary><p>No. Claude Code is the brain. The plugin is a browser, oracles, evidence and replay; it runs on your Claude Code plan and needs no API key.</p></details>
+      <details class="reveal"><summary>Does it work with apps made of several services or repos?</summary><p>Yes, through the UI: attach to the front end you already run, and every backend it calls is exercised and every failing request is caught. Suspect files and server logs come from the one repo you point it at today; workspaces that span several repos are on the roadmap.</p></details>
+      <details class="reveal"><summary>Will it touch my real data?</summary><p>When Breakpoint boots your repo, it uses throwaway containers with database snapshots and mocks for mail and payments. When it attaches to your dev server, it acts on your dev data, so point it at a dev environment, never production.</p></details>
+      <details class="reveal"><summary>Where do recordings go?</summary><p>Into <code>~/.breakpoint/runs</code> on your machine. Nothing is uploaded.</p></details>
+      <details class="reveal"><summary>Why does macOS warn me when I open the app?</summary><p>This preview is signed locally but not yet notarized by Apple. Right-click the app and choose Open once; after that it opens normally.</p></details>
+    </section>
+
+    <section class="final reveal">
+      <h2>Ship the fix, not the regression.</h2>
+      <div class="cta">
+        <a class="btn" data-download href="#install">Download for macOS</a>
+        <a class="btn btn-ghost" href="#install" data-tab-link="plugin">Add to Claude Code</a>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <span>© 2026 Breakpoint</span>
-    <a href="https://github.com/devroopsaha744/breakpoint-page/releases">All releases</a>
+    <span><img src="assets/mark.svg" alt="" width="16" height="16"> © 2026 Breakpoint</span>
+    <span class="foot-links"><a href="https://github.com/devroopsaha744/breakpoint-page/releases">Releases</a><a href="https://github.com/devroopsaha744/breakpoint-page">GitHub</a></span>
   </footer>
 
-  <script>
-    // One place for the download URL: GitHub serves the newest release asset under this stable path.
-    const DMG = 'https://github.com/devroopsaha744/breakpoint-page/releases/latest/download/Breakpoint-arm64.dmg'
-    document.querySelectorAll('[data-download]').forEach((a) => (a.href = DMG))
-  </script>
+  <script src="app.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "name": "breakpoint",
+  "owner": { "name": "Devroop Saha" },
+  "metadata": { "description": "Breakpoint: local-first QA for Claude Code." },
+  "plugins": [
+    {
+      "name": "breakpoint",
+      "source": "./plugin",
+      "description": "A sandboxed, screen-recorded browser, oracles for console, network and server errors, bug reports with suspect files, and model-free replay to verify fixes. Includes the /qa skill.",
+      "version": "0.1.0"
+    }
+  ]
+}
