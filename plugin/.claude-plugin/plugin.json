@@ -1,0 +1,10 @@
+{
+  "name": "breakpoint",
+  "version": "0.1.0",
+  "description": "Local-first QA for Claude Code: a sandboxed, screen-recorded browser, oracles that catch console, network and server errors, bug reports with suspect files, and model-free replay to verify fixes. Includes the /qa skill.",
+  "author": { "name": "Devroop Saha" },
+  "homepage": "https://devroopsaha744.github.io/breakpoint-page/",
+  "repository": "https://github.com/devroopsaha744/breakpoint-page",
+  "license": "MIT",
+  "keywords": ["qa", "e2e", "testing", "browser", "mcp"]
+}
